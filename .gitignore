@@ -1,14 +1,17 @@
+# Build output
 Debug/
 obj/
 
+# MRS workspace
+.mrs/
+
+# Eclipse settings
+.settings/
+.metadata/
+
+# Generated files
 *.elf
 *.hex
 *.bin
 *.map
 *.lst
-
-.mrs/
-
-.settings/
-
-.metadata/
