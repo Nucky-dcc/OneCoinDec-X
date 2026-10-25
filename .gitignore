@@ -1,0 +1,14 @@
+Debug/
+obj/
+
+*.elf
+*.hex
+*.bin
+*.map
+*.lst
+
+.mrs/
+
+.settings/
+
+.metadata/
