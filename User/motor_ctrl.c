@@ -3,8 +3,8 @@
  * ワンコインデコーダＸ  for WCH CH32V003 シリーズ (J4M6 / F4P6)
  * Copyright (C) 2026  Nucky
  * File Name  : motor_ctrl.c
- * Version    : 1.0
- * Date       : 2026/05/24
+ * Version    : 1.0.1
+ * Date       : 2026/10/25
  * Author     : Nucky
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -372,7 +372,8 @@ void Update_Outputs(void) {
 
 // --- コマンドステーションにAck(受領確認)を返すための電流消費処理 ---
 void Send_Ack(void) {
-    // 応答のタイミングを少し遅らせる (約5ms)
+    // ACK処理は一部コマンドステーションとの互換性を考慮し、
+    // 実機検証のうえ応答のタイミングを少し遅らせる (約5ms)
     uint16_t pre_wait = TIM2->CNT;
     while ((uint16_t)(TIM2->CNT - pre_wait) < 5000);
 

@@ -3,8 +3,8 @@
  * ワンコインデコーダＸ  for WCH CH32V003 シリーズ (J4M6 / F4P6)
  * Copyright (C) 2026  Nucky
  * File Name  : cv_manager.c
- * Version    : 1.0
- * Date       : 2026/06/20
+ * Version    : 1.1.0
+ * Date       : 2026/10/25
  * Author     : Nucky
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -54,15 +54,16 @@ const uint8_t Default_CV_Tab[CV_DATA_SIZE] = {
     1,   // CV4 : 出力状態の保持設定など
     1,   // CV5 : 反転ディレイ
     127, // CV6 : PWM出力 Duty比
-    96,  // CV7 : デコーダバージョン (読取専用)
-    156, // CV8 : メーカーID (Web Nucky=156) / 8書込でリセット
+    11,  // CV7 : デコーダバージョン (読取専用)
+    156, // CV8 : CV8 : メーカーID Web Nucky=156
+         //       (読取専用、値8の書込みでファクトリーリセット)
     5,   // CV9 : ポイント切り替えガードタイム (x100ms)
     0,   // CV10: 未使用
 
     0, 0, 0, 0, 0, 0, // CV11 ~ CV16: 未使用
     192, // CV17: ロングアドレス上位 (ポイントでは通常未使用)
     128, // CV18: ロングアドレス下位
-    0,   // CV19: コンシストアドレス
+    0,   // CV19: 未使用
     0,   // CV20: 未使用
 
     0, 0, 0, 0, 0, 0, 0, 0, // CV21 ~ CV28: 未使用
@@ -85,8 +86,9 @@ const uint8_t Default_CV_Tab[CV_DATA_SIZE] = {
     0,   // CV4 : 減速率 (モメンタム: 大きくするとゆっくり減速)
     255, // CV5 : Vhigh  / 最高電圧 (最高速度の制限)
     0,   // CV6 : Vmid   / 中間電圧 (速度カーブのふくらみ調整)
-    10,  // CV7 : デコーダバージョン (読取専用)
-    156, // CV8 : メーカーID (Web Nucky=156) / 8書き込みでファクトリーリセット
+    11,  // CV7 : デコーダバージョン (読取専用)
+    156, // CV8 : CV8 : メーカーID Web Nucky=156
+         //       (読取専用、値8の書込みでファクトリーリセット)
     0,   // CV9 : モータPWM周波数 (0:32kHz, 1:8kHz, 2:2kHz, 3:500Hz)
     64,  // CV10: BEMFカットアウト
 
@@ -94,13 +96,16 @@ const uint8_t Default_CV_Tab[CV_DATA_SIZE] = {
     0, 0, 0, 0, 0, 0, // CV11~16: 未使用
     192, // CV17: ロングアドレス上位 (デフォルト値)
     128, // CV18: ロングアドレス下位 (デフォルト値)
-    0,   // CV19: コンシストアドレス
+    0,   // CV19: 予約（将来拡張用）
     0,   // CV20: 未使用
 
     // 【コンフィグレーション】
     0, 0, 0, 0, 0, 0, 0, 0, // CV21~28: 未使用
     2,   // CV29: コンフィグレーション (初期値2 = 28/128ステップ設定)
-         //       bit0: 方向反転, bit1: 28/128Step, bit2: アナログON, bit5: ロングアドレス有効
+         //         bit0: 方向反転
+         //         bit1: 28/128Step設定
+         //         bit2: 予約（アナログ運転未対応）
+         //         bit5: ロングアドレス有効
     0,   // CV30: 両極性Fxモード（2=モーター出力をF0出力の転極回路として使用）
 
     // 【ファンクションマッピング (CV31~46)】
@@ -216,31 +221,43 @@ void EEPROM_Init(void) {
 void Write_CV(uint16_t cv_number, uint8_t value) {
     // CV番号を配列のインデックス番号(0-63)に変換
     uint16_t index = cv_number - 1;
-    
-    if(index < CV_DATA_SIZE) {
-        // --- ファクトリーリセットの処理 ---
-        // CV8 に 8 が書き込まれた場合は、全CVをデフォルト状態に戻すDCC規格の標準機能
-        if (cv_number == 8 && value == 8) { 
-            for(uint16_t i = 0; i < CV_DATA_SIZE; i++) cv_cache[i] = Default_CV_Tab[i];
-            EEPROM_SaveAll(); 
+
+    if(index >= CV_DATA_SIZE)
+        return;
+
+    // CV7 : バージョン番号（読取専用）
+    if (cv_number == 7)
+        return;
+
+    // CV8 : メーカーID（読取専用）ただし値8を書き込んだ場合のみファクトリーリセットを実行
+    if (cv_number == 8) {
+        if (value == 8) {
+            for(uint16_t i = 0; i < CV_DATA_SIZE; i++)
+                cv_cache[i] = Default_CV_Tab[i];
+
+            EEPROM_SaveAll();
+
 #ifdef HAS_MOTOR_OUTPUT
-            // モーター出力がある場合、CV9(PWM周波数)も初期化されるためタイマーを再設定
-            Update_PWM_Freq(); 
+            Update_PWM_Freq();
 #endif
-            return;
         }
-        
+
+        return;
+    }
+
         // --- 通常の書き込み処理 ---
         // Flashメモリは書き換え可能回数に寿命があるため、
         // 既存の値と違う値が書き込まれた場合のみ、Flashへの書き込みを実行します。
-        if(cv_cache[index] != value) { 
-            cv_cache[index] = value; // キャッシュを更新
-            EEPROM_SaveAll();        // Flashへ保存
-            
+    if (cv_cache[index] != value)
+    {
+        cv_cache[index] = value;
+
+        EEPROM_SaveAll();
+
 #if defined(HAS_MOTOR_OUTPUT) && !defined(TARGET_8PIN_POINT)
             // モータPWM周波数の設定(CV9)が変更された場合は、即座にハードウェアに反映
-            if (cv_number == 9) Update_PWM_Freq(); 
+        if (cv_number == 9)
+            Update_PWM_Freq();
 #endif
-        }
     }
 }
