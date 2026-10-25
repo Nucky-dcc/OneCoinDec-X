@@ -1,0 +1,25 @@
+One Coin Decoder X
+Copyright (C) 2026 Nucky
+
+This software is released under the GNU General Public License Version 3 (GPLv3).
+
+You may use, study, modify, redistribute and commercially distribute this software, provided that you comply with the terms of GPLv3.
+
+A separate commercial license is available for users who wish to:
+
+- distribute products without providing source code
+- use licensing terms different from GPLv3
+- distribute proprietary or closed-source derivatives
+
+For details, please visit:
+
+https://nucky.net/policy/
+
+Disclaimer
+
+This software is provided "AS IS", WITHOUT WARRANTY OF ANY KIND.
+
+The author shall not be liable for any damages arising from the use of this software.
+
+Use at your own risk.
+
