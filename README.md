@@ -77,8 +77,9 @@
 Nucky
 
 
+\## ドキュメント
 
-Webサイト:
-
-https://nucky.net/
+\- [Web Nucky](https://nucky.net/)
+\- [CV設定とBEMF解説](https://nucky.net/diy-dcc/one-coin-dec-x/cv-conf/)
+\- [ライセンス・免責事項](https://nucky.net/policy/)
 
