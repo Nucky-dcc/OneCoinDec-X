@@ -4,8 +4,8 @@
  * Copyright (C) 2026  Nucky
  *
  * File Name  : dcc_core.h
- * Version    : 1.0
- * Date       : 2026/05/24
+ * Version    : 1.1.1
+ * Date       : 2026/10/27
  * Author     : Nucky
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
