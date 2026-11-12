@@ -1,6 +1,9 @@
 # MounRiver Studio workspace
 .mrs/
 
+# Build output
+Debug/
+
 # Object files
 obj/
 
@@ -10,6 +13,3 @@ obj/
 *.bin
 *.map
 *.lst
-
-# Eclipse workspace
-.metadata/
