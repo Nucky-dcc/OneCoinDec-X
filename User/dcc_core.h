@@ -1,16 +1,20 @@
 /*******************************************************************************
  *
  * ワンコインデコーダＸ  for WCH CH32V003 シリーズ (J4M6 / F4P6)
- * Copyright (C) 2026  Nucky
  *
- * File Name  : dcc_core.h
- * Version    : 1.1.1
- * Date       : 2026/10/27
- * Author     : Nucky
+ * Copyright (C) 2026 Nucky
  *
- * SPDX-License-Identifier: GPL-3.0-or-later
+ * This program is free software:
+ * you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License
+ * version 3 as published by the Free Software Foundation.
  *
- * See LICENSE-GPLv3.txt for details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * SPDX-License-Identifier: GPL-3.0-only
  *
  * 【概要】
  * 本ファイルは、線路から送られてくるDCC（Digital Command Control）信号の

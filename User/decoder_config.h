@@ -1,15 +1,20 @@
 /*******************************************************************************
  *
  * ワンコインデコーダＸ  for WCH CH32V003 シリーズ (J4M6 / F4P6)
- * Copyright (C) 2026  Nucky
- * File Name  : decoder_config.h
- * Version    : 1.1.1
- * Date       : 2026/10/27
- * Author     : Nucky
  *
- * SPDX-License-Identifier: GPL-3.0-or-later
+ * Copyright (C) 2026 Nucky
  *
- * See LICENSE-GPLv3.txt for details.
+ * This program is free software:
+ * you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License
+ * version 3 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * SPDX-License-Identifier: GPL-3.0-only
  *
  * 【概要】
  * ハードウェア（マイコンのピン配置、使用するタイマー、割り込み設定など）および
@@ -38,8 +43,8 @@
 //  有効にしたいターゲットのコメント(`//`)を外し、それ以外はコメントアウトしてください。
 //  ※同時に複数有効にするとコンパイルエラーや予期せぬ動作を引き起こします。
 // ============================================================================
-//#define TARGET_20PIN_LOCO    // 車載用フルスペック（20ピン：CH32V003F4P6）: モーター制御＋BEMF＋多数のファンクション出力
-#define TARGET_8PIN_LOCO       // 車載用（8ピン：CH32V003J4M6）: モーター制御＋前後ライト出力のみの標準版
+#define TARGET_20PIN_LOCO    // 車載用フルスペック（20ピン：CH32V003F4P6）: モーター制御＋BEMF＋多数のファンクション出力
+//#define TARGET_8PIN_LOCO       // 車載用（8ピン：CH32V003J4M6）: モーター制御＋前後ライト出力のみの標準版
 //#define TARGET_8PIN_FUNC     // 車載用ファンクション（8ピン：CH32V003J4M6）: モーター出力なし、ライト等の出力専用
 //#define TARGET_8PIN_POINT    // ポイント用（8ピン：CH32V003J4M6）: ポイントマシンのソレノイド駆動専用デコーダ
 

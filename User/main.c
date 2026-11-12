@@ -1,15 +1,20 @@
 /*******************************************************************************
  *
  * ワンコインデコーダＸ  for WCH CH32V003 シリーズ (J4M6 / F4P6)
- * Copyright (C) 2026  Nucky
- * File Name  : main.c
- * Version    : 1.1.1
- * Date       : 2026/10/27
- * Author     : Nucky
  *
- * SPDX-License-Identifier: GPL-3.0-or-later
+ * Copyright (C) 2026 Nucky
  *
- * See LICENSE-GPLv3.txt for details.
+ * This program is free software:
+ * you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License
+ * version 3 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * SPDX-License-Identifier: GPL-3.0-only
  *
  * 【概要】
  * 本ファイルは、デコーダの心臓部となるメイン処理が記述されています。
